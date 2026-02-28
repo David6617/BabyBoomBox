@@ -17,7 +17,7 @@
 
 const int BUZZER_PIN = 9;
 const unsigned int NOTE_MS = 250;   // note length per key press (other keys)
-const unsigned int EIGHTH_MS = 200; // eighth-note length for D phrase
+const unsigned int EIGHTH_MS = 250; // eighth-note length for D phrase
 
 const byte ROWS = 4;
 const byte COLS = 4;
