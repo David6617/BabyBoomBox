@@ -15,7 +15,7 @@
  *   - Row pins: 9, 8, 7, 6
  *   - Col pins: 5, 4, 3, 2
  *
- * Speaker → DFPlayer: 8Ω between SPK_1 and SPK_2
+ * Buzzer → DFPlayer: connect between SPK_1 and SPK_2
  *
  * --- SD CARD ---
  *   - FAT32, root: 001.mp3 .. 016.mp3 (one per button, insert before power-on)
