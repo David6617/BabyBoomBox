@@ -10,13 +10,14 @@
  *
  * --- KEY → NOTE ---
  * 1→C4, 2→C#4, 3→D4, A→D#4, 4→E4, 5→F4, 6→F#4, B→G4,
- * 7→G#4, 8→A4, 9→A#4, C→B4, *→C5, 0→C#5, #→D5, D→D#5
+ * 7→G#4, 8→A4, 9→A#4, C→B4, *→C5, 0→C#5, #→D5, D→phrase (A#3 A#3 A#3 A#3 G3 D#3 F3)
  */
 
 #include <Keypad.h>
 
 const int BUZZER_PIN = 9;
-const unsigned int NOTE_MS = 250;  // note length per key press
+const unsigned int NOTE_MS = 250;   // note length per key press (other keys)
+const unsigned int EIGHTH_MS = 200; // eighth-note length for D phrase
 
 const byte ROWS = 4;
 const byte COLS = 4;
@@ -49,9 +50,21 @@ unsigned int keyToFreq(char key) {
     case '*': return 523;   // C5
     case '0': return 554;   // C#5
     case '#': return 587;   // D5
-    case 'D': return 622;   // D#5
+    case 'D': return 622;   // D#5 (used only if not playing phrase)
     default:  return 0;
   }
+}
+
+// D key: play A#3, A#3, A#3, A#3, G3, D#3, F3 (eighth notes)
+const unsigned int PHRASE_D_LEN = 7;
+const unsigned int PHRASE_D[] = { 233, 233, 233, 233, 196, 156, 175 }; // A#3, A#3, A#3, A#3, G3, D#3, F3
+
+void playPhraseD() {
+  for (int i = 0; i < PHRASE_D_LEN; i++) {
+    tone(BUZZER_PIN, PHRASE_D[i], EIGHTH_MS);
+    delay(EIGHTH_MS);
+  }
+  noTone(BUZZER_PIN);
 }
 
 void setup() {
@@ -62,6 +75,10 @@ void loop() {
   char key = customKeypad.getKey();
   if (!key) return;
 
+  if (key == 'D') {
+    playPhraseD();
+    return;
+  }
   unsigned int freq = keyToFreq(key);
   if (freq > 0) {
     tone(BUZZER_PIN, freq, NOTE_MS);
