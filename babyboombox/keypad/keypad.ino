@@ -23,6 +23,13 @@ void loop(){
   char customKey = customKeypad.getKey();
   
   if (customKey){
-    Serial.println(customKey);
+    // Serial.println(customKey);
   }
+
+  int sensorValue = analogRead(A5);
+
+  if (sensorValue){
+    Serial.println(sensorValue);
+  }
+
 }
