@@ -1,0 +1,1 @@
+Konichiwagwan mina san
