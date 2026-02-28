@@ -1,25 +1,35 @@
 # BabyBoomBox
 
-Physical soundboard: keypad → MP3 playback (Phase 1).
+Physical soundboard: 4×4 keypad → WAV playback on buzzer (16 buttons, 16 .wav files). No DFPlayer; uses SD card module + TMRpcm.
 
-## Key → audio file mapping
+## Key → WAV file mapping
 
-| Key | File    | Key | File    |
-|-----|---------|-----|---------|
-| 1   | 001.mp3 | 9   | 009.mp3 |
-| 2   | 002.mp3 | A   | 010.mp3 |
-| 3   | 003.mp3 | B   | 011.mp3 |
-| 4   | 004.mp3 | C   | 012.mp3 |
-| 5   | 005.mp3 | *   | 013.mp3 |
-| 6   | 006.mp3 | 0   | 014.mp3 |
-| 7   | 007.mp3 | #   | 015.mp3 |
-| 8   | 008.mp3 | D   | 016.mp3 |
+| Key | File     | Key | File     |
+|-----|----------|-----|----------|
+| 1   | 001.wav  | 9   | 009.wav  |
+| 2   | 002.wav  | A   | 010.wav  |
+| 3   | 003.wav  | B   | 011.wav  |
+| 4   | 004.wav  | C   | 012.wav  |
+| 5   | 005.wav  | *   | 013.wav  |
+| 6   | 006.wav  | 0   | 014.wav  |
+| 7   | 007.wav  | #   | 015.wav  |
+| 8   | 008.wav  | D   | 016.wav  |
 
-Place **001.mp3** … **016.mp3** in the root of the SD card (FAT32, insert before power-on).
+Place **001.wav** … **016.wav** in the **root** of the SD card (FAT16 or FAT32).
+
+## WAV format (required)
+
+- **8-bit unsigned PCM**, **mono**, **8–32 kHz** (16 kHz recommended).
+- In **Audacity:** Tracks → Resample → 16000 → File → Export → Export as WAV → **Unsigned 8-bit PCM**.
+
+## Wiring
+
+- **Buzzer:** Pin 10 → buzzer +, GND → buzzer -.
+- **SD card module (SPI):** CS → A0, MOSI → 11, MISO → 12, SCK → 13, 5V, GND.
+- **Keypad:** Rows → 9, 8, 7, 6; Cols → 5, 4, 3, 2.
 
 ## Setup
 
-- **Hardware:** Arduino, DFPlayer Mini, 4×4 keypad, buzzer (output from DFPlayer SPK_1/SPK_2), MicroSD.
-- Open **BabyBoomBox/BabyBoomBox.ino** (or **babyboombox/BabyBoomBox.ino**) in Arduino IDE.
-- Install libraries: **Sketch → Include Library → Manage Libraries** → **DFPlayer Mini** (DFRobot) and **Keypad**.
-- Wiring is in the comment block at the top of the sketch.
+- **Hardware:** Arduino, 4×4 keypad, **SD card module** (e.g. generic SPI MicroSD breakout), buzzer.
+- **Libraries:** **Keypad** and **TMRpcm** (Library Manager). SD and SPI are built-in.
+- Open **babyboombox/BabyBoomBox.ino** in Arduino IDE.
